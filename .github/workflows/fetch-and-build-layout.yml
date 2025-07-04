@@ -11,6 +11,9 @@ on:
         description: "voyager|moonlander|ergodox_ez"
         required: true
         default: "voyager"
+      qmk_version:
+        description: "Override QMK version"
+        required: false
 
 permissions:
   contents: write
@@ -37,7 +40,8 @@ jobs:
           
           curl -L "https://oryx.zsa.io/source/${hash_id}" -o source.zip
           
-          echo firmware_version=${firmware_version} >> "$GITHUB_OUTPUT"
+          override_version=${{github.event.inputs.qmk_version}}
+          echo firmware_version=${override_version:-$firmware_version} >> "$GITHUB_OUTPUT"
 
       - name: Unzip the source file
         run: |
