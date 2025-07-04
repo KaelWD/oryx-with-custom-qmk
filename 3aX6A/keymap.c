@@ -1,10 +1,12 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
 #define MOON_LED_LEVEL LED_LEVEL
-#define ML_SAFE_RANGE SAFE_RANGE
+#ifndef ZSA_SAFE_RANGE
+#define ZSA_SAFE_RANGE SAFE_RANGE
+#endif
 
 enum custom_keycodes {
-  RGB_SLD = ML_SAFE_RANGE,
+  RGB_SLD = ZSA_SAFE_RANGE,
   ST_MACRO_0,
 };
 
@@ -14,20 +16,21 @@ enum tap_dance_codes {
   DANCE_0,
 };
 
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
     KC_ESCAPE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           TD(DANCE_0),    
     KC_TAB,         KC_B,           KC_Y,           KC_O,           KC_U,           MT(MOD_LGUI, KC_QUOTE),                                MT(MOD_RGUI, KC_SCLN),KC_L,           KC_D,           KC_W,           KC_V,           KC_Z,           
     KC_LEFT_ALT,    KC_C,           KC_I,           KC_E,           KC_A,           KC_COMMA,                                       KC_DOT,         KC_H,           KC_T,           KC_S,           KC_N,           MT(MOD_RCTL, KC_Q),
-    KC_LEFT_CTRL,   KC_G,           KC_X,           KC_J,           KC_K,           LT(3,KC_MINUS),                                 LT(3,KC_SLASH), KC_R,           KC_M,           KC_F,           KC_P,           KC_DELETE,      
-                                                    LT(4,KC_SPACE), KC_LEFT_SHIFT,                                  KC_BSPC,        LT(5,KC_ENTER)
+    KC_LEFT_CTRL,   KC_G,           KC_X,           KC_J,           KC_K,           LT(3, KC_MINUS),                                LT(3, KC_SLASH),KC_R,           KC_M,           KC_F,           KC_P,           KC_DELETE,      
+                                                    LT(4, KC_SPACE),KC_LEFT_SHIFT,                                  KC_BSPC,        LT(5, KC_ENTER)
   ),
   [1] = LAYOUT_voyager(
     KC_ESCAPE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           KC_TRANSPARENT, 
-    KC_T,           KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,                                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           LT(4,KC_GRAVE), 
+    KC_T,           KC_TAB,         KC_Q,           KC_W,           KC_E,           KC_R,                                           KC_Y,           KC_U,           KC_I,           KC_O,           KC_P,           LT(4, KC_GRAVE),
     KC_G,           KC_LEFT_SHIFT,  KC_A,           KC_S,           KC_D,           KC_F,                                           KC_H,           KC_J,           KC_K,           KC_L,           KC_SCLN,        KC_RIGHT_GUI,   
-    KC_B,           KC_6,           KC_Z,           KC_X,           KC_C,           KC_V,                                           LT(3,KC_N),     KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       KC_RIGHT_ALT,   
-                                                    KC_SPACE,       KC_LEFT_CTRL,                                   KC_BSPC,        LT(5,KC_ENTER)
+    KC_B,           KC_6,           KC_Z,           KC_X,           KC_C,           KC_V,                                           LT(3, KC_N),    KC_M,           KC_COMMA,       KC_DOT,         KC_SLASH,       KC_RIGHT_ALT,   
+                                                    KC_SPACE,       KC_LEFT_CTRL,                                   KC_BSPC,        LT(5, KC_ENTER)
   ),
   [2] = LAYOUT_voyager(
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_TRANSPARENT, 
@@ -48,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_HASH,        KC_LABK,        KC_RABK,        KC_UNDS,        KC_DQUO,                                        KC_GRAVE,       KC_AMPR,        KC_LBRC,        KC_RBRC,        KC_PERC,        KC_NO,          
     KC_TRANSPARENT, KC_EXLM,        KC_MINUS,       KC_PLUS,        KC_EQUAL,       KC_BSLS,                                        KC_DOT,         KC_PIPE,        KC_LPRN,        KC_RPRN,        KC_QUES,        KC_NO,          
     KC_TRANSPARENT, KC_CIRC,        KC_SLASH,       KC_ASTR,        KC_COLN,        LCTL(KC_V),                                     KC_DLR,         KC_TILD,        KC_LCBR,        KC_RCBR,        KC_AT,          KC_TRANSPARENT, 
-                                                    KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, LT(5,KC_SPACE)
+                                                    KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, LT(5, KC_SPACE)
   ),
   [5] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_PSCR,        KC_TRANSPARENT, KC_TRANSPARENT, KC_INSERT,      KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
@@ -58,6 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
 };
+
 
 const uint16_t PROGMEM combo0[] = { KC_N, KC_S, KC_T, COMBO_END};
 
@@ -164,6 +168,7 @@ bool rgb_matrix_indicators_user(void) {
   return true;
 }
 
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case ST_MACRO_0:
@@ -180,7 +185,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
-
 
 typedef struct {
     bool is_press_action;
