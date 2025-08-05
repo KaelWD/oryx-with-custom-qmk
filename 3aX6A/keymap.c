@@ -34,9 +34,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [2] = LAYOUT_voyager(
     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          TO(1),          TO(0),          KC_TRANSPARENT, 
-    KC_NO,          KC_NO,          KC_NO,          TO(1),          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_AUDIO_VOL_UP,
+    KC_NO,          KC_NO,          KC_NO,          TO(1),          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_MEDIA_PLAY_PAUSE,KC_MEDIA_NEXT_TRACK,KC_AUDIO_VOL_UP,
     KC_TRANSPARENT, KC_NO,          KC_NO,          KC_NO,          TO(0),          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_AUDIO_VOL_DOWN,
-    KC_TRANSPARENT, KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          
+    KC_TRANSPARENT, KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,                                          KC_NO,          KC_NO,          KC_NO,          TO(3),          KC_NO,          KC_NO,          
                                                     KC_NO,          KC_NO,                                          KC_NO,          KC_NO
   ),
   [3] = LAYOUT_voyager(
@@ -73,8 +73,6 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_COMMA:
             return TAPPING_TERM -20;
-        case TD(DANCE_0):
-            return TAPPING_TERM + 20;
         case KC_DOT:
             return TAPPING_TERM -20;
         case KC_F5:
@@ -98,7 +96,14 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+
 extern rgb_config_t rgb_matrix_config;
+
+RGB hsv_to_rgb_with_value(HSV hsv) {
+  RGB rgb = hsv_to_rgb( hsv );
+  float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
+  return (RGB){ f * rgb.r, f * rgb.g, f * rgb.b };
+}
 
 void keyboard_post_init_user(void) {
   rgb_matrix_enable();
@@ -109,7 +114,7 @@ const uint8_t PROGMEM ledmap[][RGB_MATRIX_LED_COUNT][3] = {
 
     [1] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,245,245}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,245,245}, {0,245,245}, {0,245,245}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,245,245}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
 
-    [2] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,245,245}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {219,246,154}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,245,245}, {219,246,154}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {27,218,204}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {27,218,204}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
+    [2] = { {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,245,245}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {219,246,154}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,245,245}, {219,246,154}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {27,218,204}, {27,218,204}, {27,218,204}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {27,218,204}, {0,0,0}, {0,0,0}, {0,0,0}, {219,225,213}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0} },
 
     [3] = { {0,0,0}, {219,246,154}, {0,0,0}, {0,0,0}, {219,246,154}, {0,0,0}, {0,0,0}, {139,219,200}, {139,219,200}, {139,219,200}, {139,219,200}, {0,0,0}, {0,0,0}, {139,219,200}, {139,219,200}, {139,219,200}, {139,219,200}, {0,0,0}, {0,0,0}, {139,219,200}, {139,219,200}, {139,219,200}, {139,219,200}, {0,0,0}, {0,0,0}, {0,0,0}, {0,0,0}, {27,218,204}, {27,218,204}, {27,218,204}, {89,255,255}, {0,0,0}, {0,0,0}, {27,218,204}, {27,218,204}, {27,218,204}, {89,255,255}, {219,225,213}, {0,0,0}, {27,218,204}, {27,218,204}, {27,218,204}, {89,255,255}, {219,225,213}, {0,245,245}, {27,218,204}, {27,218,204}, {219,225,213}, {89,255,255}, {0,0,0}, {0,0,0}, {0,0,0} },
 
@@ -129,9 +134,8 @@ void set_layer_color(int layer) {
     if (!hsv.h && !hsv.s && !hsv.v) {
         rgb_matrix_set_color( i, 0, 0, 0 );
     } else {
-        RGB rgb = hsv_to_rgb( hsv );
-        float f = (float)rgb_matrix_config.hsv.v / UINT8_MAX;
-        rgb_matrix_set_color( i, f * rgb.r, f * rgb.g, f * rgb.b );
+        RGB rgb = hsv_to_rgb_with_value(hsv);
+        rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
     }
   }
 }
@@ -161,10 +165,11 @@ bool rgb_matrix_indicators_user(void) {
       set_layer_color(5);
       break;
    default:
-    if (rgb_matrix_get_flags() == LED_FLAG_NONE)
+      if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
       rgb_matrix_set_color_all(0, 0, 0);
-    break;
   }
+  }
+
   return true;
 }
 
@@ -217,46 +222,30 @@ uint8_t dance_step(tap_dance_state_t *state) {
 }
 
 
-void on_dance_0(tap_dance_state_t *state, void *user_data);
 void dance_0_finished(tap_dance_state_t *state, void *user_data);
 void dance_0_reset(tap_dance_state_t *state, void *user_data);
-
-void on_dance_0(tap_dance_state_t *state, void *user_data) {
-    if(state->count == 3) {
-        tap_code16(KC_MEDIA_PLAY_PAUSE);
-        tap_code16(KC_MEDIA_PLAY_PAUSE);
-        tap_code16(KC_MEDIA_PLAY_PAUSE);
-    }
-    if(state->count > 3) {
-        tap_code16(KC_MEDIA_PLAY_PAUSE);
-    }
-}
 
 void dance_0_finished(tap_dance_state_t *state, void *user_data) {
     dance_state[0].step = dance_step(state);
     switch (dance_state[0].step) {
-        case SINGLE_TAP: register_code16(KC_MEDIA_PLAY_PAUSE); break;
         case SINGLE_HOLD: layer_on(2); break;
-        case DOUBLE_TAP: register_code16(KC_MEDIA_NEXT_TRACK); break;
-        case DOUBLE_SINGLE_TAP: tap_code16(KC_MEDIA_PLAY_PAUSE); register_code16(KC_MEDIA_PLAY_PAUSE);
+        case DOUBLE_HOLD: register_code16(KC_MEDIA_PLAY_PAUSE); break;
     }
 }
 
 void dance_0_reset(tap_dance_state_t *state, void *user_data) {
     wait_ms(10);
     switch (dance_state[0].step) {
-        case SINGLE_TAP: unregister_code16(KC_MEDIA_PLAY_PAUSE); break;
         case SINGLE_HOLD:
           if(!is_layer_locked(2)) {
             layer_off(2);
           }
         break;
-        case DOUBLE_TAP: unregister_code16(KC_MEDIA_NEXT_TRACK); break;
-        case DOUBLE_SINGLE_TAP: unregister_code16(KC_MEDIA_PLAY_PAUSE); break;
+        case DOUBLE_HOLD: unregister_code16(KC_MEDIA_PLAY_PAUSE); break;
     }
     dance_state[0].step = 0;
 }
 
 tap_dance_action_t tap_dance_actions[] = {
-        [DANCE_0] = ACTION_TAP_DANCE_FN_ADVANCED(on_dance_0, dance_0_finished, dance_0_reset),
+        [DANCE_0] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_0_finished, dance_0_reset),
 };
