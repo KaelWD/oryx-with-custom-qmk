@@ -88,6 +88,13 @@ jobs:
           git commit -m "✨(qmk): Update firmware" || echo "No QMK change"
           git push
 
+      - name: Load getreuer modules
+        run: |
+          cd qmk_firmware
+          git submodule add https://github.com/getreuer/qmk-modules.git modules/getreuer
+          git submodule update --init --recursive
+          cd ..
+
       - name: Build qmk docker image
         run: docker build -t qmk .
 
