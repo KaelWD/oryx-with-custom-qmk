@@ -1,7 +1,6 @@
 {
     "modules": [
         "zsa/oryx",
-        "zsa/defaults",
-        "getreuer/socd_cleaner"
+        "zsa/defaults"
     ]
 }

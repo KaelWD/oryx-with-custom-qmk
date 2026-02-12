@@ -58,16 +58,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
-socd_cleaner_t socd_opposing_pairs[] = {
-  {{KC_W, KC_S}, SOCD_CLEANER_LAST},
-  {{KC_A, KC_D}, SOCD_CLEANER_LAST},
-};
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-  socd_cleaner_enabled = IS_LAYER_ON_STATE(state, 1);
-  return state;
-}
-
 const uint16_t PROGMEM combo0[] = { KC_N, KC_S, KC_T, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
