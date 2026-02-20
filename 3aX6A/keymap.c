@@ -69,6 +69,8 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_COMMA:
             return TAPPING_TERM -20;
+        case LT(5, KC_MEDIA_PLAY_PAUSE):
+            return TAPPING_TERM -60;
         case KC_DOT:
             return TAPPING_TERM -20;
         case KC_F5:
@@ -140,38 +142,62 @@ bool rgb_matrix_indicators_user(void) {
   if (rawhid_state.rgb_control) {
       return false;
   }
-    if (keyboard_config.disable_layer_led) { return false; }
-  switch (biton32(layer_state)) {
-    case 0:
-      set_layer_color(0);
-      break;
-    case 1:
-      set_layer_color(1);
-      break;
-    case 2:
-      set_layer_color(2);
-      break;
-    case 3:
-      set_layer_color(3);
-      break;
-    case 4:
-      set_layer_color(4);
-      break;
-    case 5:
-      set_layer_color(5);
-      break;
-   default:
-      if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
-        rgb_matrix_set_color_all(0, 0, 0);
-      }
+  if (!keyboard_config.disable_layer_led) { 
+    switch (biton32(layer_state)) {
+      case 0:
+        set_layer_color(0);
+        break;
+      case 1:
+        set_layer_color(1);
+        break;
+      case 2:
+        set_layer_color(2);
+        break;
+      case 3:
+        set_layer_color(3);
+        break;
+      case 4:
+        set_layer_color(4);
+        break;
+      case 5:
+        set_layer_color(5);
+        break;
+     default:
+        if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
+          rgb_matrix_set_color_all(0, 0, 0);
+        }
+    }
+  } else {
+    if (rgb_matrix_get_flags() == LED_FLAG_NONE) {
+      rgb_matrix_set_color_all(0, 0, 0);
+    }
   }
 
   return true;
 }
 
 
+
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+  case QK_MODS ... QK_MODS_MAX:
+    // Mouse and consumer keys (volume, media) with modifiers work inconsistently across operating systems,
+    // this makes sure that modifiers are always applied to the key that was pressed.
+    if (IS_MOUSE_KEYCODE(QK_MODS_GET_BASIC_KEYCODE(keycode)) || IS_CONSUMER_KEYCODE(QK_MODS_GET_BASIC_KEYCODE(keycode))) {
+      if (record->event.pressed) {
+        add_mods(QK_MODS_GET_MODS(keycode));
+        send_keyboard_report();
+        wait_ms(2);
+        register_code(QK_MODS_GET_BASIC_KEYCODE(keycode));
+        return false;
+      } else {
+        wait_ms(2);
+        del_mods(QK_MODS_GET_MODS(keycode));
+      }
+    }
+    break;
     case ST_MACRO_0:
     if (record->event.pressed) {
       SEND_STRING(SS_TAP(X_N)SS_DELAY(1)  SS_TAP(X_S)SS_DELAY(1)  SS_TAP(X_T));
@@ -186,5 +212,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
   return true;
 }
-
-
