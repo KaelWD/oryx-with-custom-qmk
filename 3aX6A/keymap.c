@@ -18,7 +18,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESCAPE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           LT(5, KC_MEDIA_PLAY_PAUSE),
     KC_TAB,         KC_B,           KC_Y,           KC_O,           KC_U,           MT(MOD_LGUI, KC_QUOTE),                                MT(MOD_RGUI, KC_SCLN),KC_L,           KC_D,           KC_W,           KC_V,           KC_Z,           
     KC_LEFT_ALT,    KC_C,           KC_I,           KC_E,           KC_A,           KC_COMMA,                                       KC_DOT,         KC_H,           KC_T,           KC_S,           KC_N,           MT(MOD_RCTL, KC_Q),
-    KC_LEFT_CTRL,   KC_G,           KC_X,           KC_J,           KC_K,           LT(2, KC_MINUS),                                LT(2, KC_SLASH),KC_R,           KC_M,           KC_F,           KC_P,           KC_DELETE,      
+    KC_LEFT_CTRL,   KC_K,           KC_X,           KC_J,           KC_G,           LT(2, KC_MINUS),                                LT(2, KC_SLASH),KC_R,           KC_M,           KC_F,           KC_P,           KC_DELETE,      
                                                     LT(3, KC_SPACE),KC_LEFT_SHIFT,                                  KC_BSPC,        LT(4, KC_ENTER)
   ),
   [1] = LAYOUT_voyager(
@@ -175,7 +175,6 @@ bool rgb_matrix_indicators_user(void) {
 
   return true;
 }
-
 
 
 
