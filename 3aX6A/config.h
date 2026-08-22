@@ -1,4 +1,4 @@
-#define FLOW_TAP_TERM 75
+#define FLOW_TAP_TERM 50
 #undef TAPPING_TERM
 #define TAPPING_TERM 180
 
