@@ -69,6 +69,10 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case LT(5, KC_MEDIA_PLAY_PAUSE):
             return TAPPING_TERM -50;
+        case MT(MOD_RALT, KC_Z):
+            return TAPPING_TERM + 30;
+        case MT(MOD_RCTL, KC_Q):
+            return TAPPING_TERM + 30;
         default:
             return TAPPING_TERM;
     }
