@@ -17,8 +17,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_voyager(
     KC_DELETE,      KC_1,           KC_2,           KC_3,           KC_4,           KC_5,                                           KC_6,           KC_7,           KC_8,           KC_9,           KC_0,           LT(5, KC_MEDIA_PLAY_PAUSE),
     KC_TAB,         KC_B,           KC_Y,           KC_O,           KC_U,           MT(MOD_LGUI, KC_QUOTE),                                MT(MOD_RGUI, KC_SCLN),KC_L,           KC_D,           KC_W,           KC_V,           MT(MOD_RALT, KC_Z),
-    KC_LEFT_ALT,    KC_C,           KC_I,           KC_E,           KC_A,           KC_COMMA,                                       KC_DOT,         KC_H,           KC_T,           KC_S,           KC_N,           MT(MOD_RCTL, KC_Q),
-    KC_LEFT_CTRL,   KC_J,           KC_X,           KC_K,           KC_G,           LT(2, KC_MINUS),                                LT(2, KC_ESCAPE),KC_R,           KC_M,           KC_F,           KC_P,           KC_SLASH,       
+    KC_LEFT_ALT,    KC_C,           KC_I,           KC_E,           KC_A,           KC_COMMA,                                       KC_DOT,         KC_H,           KC_T,           KC_S,           KC_N,           MT(MOD_LALT, KC_Q),
+    KC_LEFT_CTRL,   KC_J,           KC_X,           KC_K,           KC_G,           LT(2, KC_MINUS),                                LT(2, KC_ESCAPE),KC_R,           KC_M,           KC_F,           KC_P,           MT(MOD_RCTL, KC_SLASH),
                                                     LT(3, KC_SPACE),KC_LEFT_SHIFT,                                  KC_BSPC,        LT(4, KC_ENTER)
   ),
   [1] = LAYOUT_voyager(
@@ -32,7 +32,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRANSPARENT, KC_PSCR,        KC_NO,          KC_NO,          KC_INSERT,      KC_NO,                                          KC_NUM,         KC_KP_7,        KC_KP_8,        KC_KP_9,        KC_KP_SLASH,    KC_TRANSPARENT, 
     KC_TRANSPARENT, KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_LEFT_GUI,                                    KC_TAB,         KC_KP_4,        KC_KP_5,        KC_KP_6,        KC_KP_ASTERISK, KC_HASH,        
     KC_TRANSPARENT, KC_F5,          KC_F6,          KC_F7,          KC_F8,          KC_LEFT_SHIFT,                                  KC_RIGHT_SHIFT, KC_KP_1,        KC_KP_2,        KC_KP_3,        KC_KP_PLUS,     KC_KP_EQUAL,    
-    KC_TRANSPARENT, KC_F9,          KC_F10,         KC_F11,         KC_F12,         KC_TRANSPARENT,                                 QK_LLCK,        KC_KP_0,        KC_KP_0,        KC_KP_DOT,      KC_KP_MINUS,    KC_TRANSPARENT, 
+    KC_TRANSPARENT, KC_F9,          KC_F10,         KC_F11,         KC_F12,         KC_TRANSPARENT,                                 TO(0),          KC_KP_0,        KC_KP_0,        KC_KP_DOT,      KC_KP_MINUS,    KC_TRANSPARENT, 
                                                     KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_TRANSPARENT, KC_TRANSPARENT
   ),
   [3] = LAYOUT_voyager(
@@ -71,7 +71,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
             return TAPPING_TERM -50;
         case MT(MOD_RALT, KC_Z):
             return TAPPING_TERM + 30;
-        case MT(MOD_RCTL, KC_Q):
+        case MT(MOD_LALT, KC_Q):
             return TAPPING_TERM + 30;
         default:
             return TAPPING_TERM;
